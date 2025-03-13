@@ -2,55 +2,53 @@
 import React from 'react';
 import AnimatedSection from './AnimatedSection';
 import { cn } from '@/lib/utils';
-import { Code, Database, Wrench, Laptop } from 'lucide-react';
 
-interface SkillItemProps {
+interface SkillProps {
   name: string;
-  icon: React.ReactNode;
+  level: number;
+  category: string;
 }
 
 const Skills: React.FC = () => {
   const skillCategories = [
     {
-      name: "Programming Languages",
-      icon: <Code className="h-6 w-6" />,
+      name: "Frontend",
       skills: [
-        "Java",
-        "Python (Data Science libraries: Pandas, NumPy, Matplotlib)",
-        "JavaScript",
-        "TypeScript",
-        "HTML/CSS",
-        "Tailwind CSS"
+        { name: "HTML/CSS", level: 90 },
+        { name: "JavaScript", level: 85 },
+        { name: "React", level: 85 },
+        { name: "TypeScript", level: 80 },
+        { name: "Next.js", level: 75 },
       ]
     },
     {
-      name: "Development Tools",
-      icon: <Wrench className="h-6 w-6" />,
+      name: "Backend",
       skills: [
-        "VS Code",
-        "Android Studio",
-        "GitHub",
-        "Git",
-        "PlantUML"
+        { name: "Node.js", level: 80 },
+        { name: "Express", level: 80 },
+        { name: "Python", level: 70 },
+        { name: "GraphQL", level: 65 },
+        { name: "MongoDB", level: 80 },
       ]
     },
     {
-      name: "Database Management",
-      icon: <Database className="h-6 w-6" />,
+      name: "Design",
       skills: [
-        "Server database management with XAMPP",
-        "MongoDB",
-        "SQL",
-        "Firebase"
+        { name: "UI/UX Design", level: 85 },
+        { name: "Figma", level: 90 },
+        { name: "Adobe XD", level: 80 },
+        { name: "Responsive Design", level: 90 },
+        { name: "Design Systems", level: 85 },
       ]
     },
     {
-      name: "Certificates",
-      icon: <Laptop className="h-6 w-6" />,
+      name: "Tools & Others",
       skills: [
-        "Project Expo - 2023 under SSIP (06/2023)",
-        "C.U.Shah Polytechnic, Surendranagar 609",
-        "Other certificates (2)"
+        { name: "Git", level: 85 },
+        { name: "Docker", level: 70 },
+        { name: "CI/CD", level: 75 },
+        { name: "AWS", level: 65 },
+        { name: "Agile Methodologies", level: 85 },
       ]
     }
   ];
@@ -62,13 +60,22 @@ const Skills: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
           {skillCategories.map((category, index) => (
-            <SkillCategory 
+            <div 
               key={category.name}
-              name={category.name} 
-              skills={category.skills}
-              icon={category.icon}
-              delay={index * 100}
-            />
+              className="glass rounded-xl p-6"
+            >
+              <h3 className="text-xl font-medium mb-4">{category.name}</h3>
+              <div className="space-y-4">
+                {category.skills.map((skill, skillIndex) => (
+                  <SkillBar 
+                    key={skill.name} 
+                    name={skill.name} 
+                    level={skill.level} 
+                    category={category.name} 
+                  />
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -76,39 +83,33 @@ const Skills: React.FC = () => {
   );
 };
 
-const SkillCategory: React.FC<{
-  name: string;
-  skills: string[];
-  icon: React.ReactNode;
-  delay?: number;
-}> = ({ name, skills, icon, delay = 0 }) => {
+const SkillBar: React.FC<SkillProps> = ({ name, level, category }) => {
+  let baseColor = "bg-blue-200";
+  let fillColor = "bg-blue-500";
+  
+  if (category === "Backend") {
+    baseColor = "bg-purple-200";
+    fillColor = "bg-purple-500";
+  } else if (category === "Design") {
+    baseColor = "bg-pink-200";
+    fillColor = "bg-pink-500";
+  } else if (category === "Tools & Others") {
+    baseColor = "bg-green-200";
+    fillColor = "bg-green-500";
+  }
+  
   return (
-    <div 
-      className="glass rounded-xl p-6 transition-all duration-300 hover:translate-y-[-5px] hover:shadow-lg"
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      <h3 className="text-xl font-medium mb-4 flex items-center gap-2">
-        {icon}
-        {name}
-      </h3>
-      <div className="space-y-3">
-        {skills.map((skill, index) => (
-          <SkillItem 
-            key={skill} 
-            name={skill}
-            icon={icon}
-          />
-        ))}
+    <div className="space-y-2">
+      <div className="flex justify-between items-center">
+        <span className="text-sm font-medium">{name}</span>
+        <span className="text-xs text-muted-foreground">{level}%</span>
       </div>
-    </div>
-  );
-};
-
-const SkillItem: React.FC<SkillItemProps> = ({ name, icon }) => {
-  return (
-    <div className="flex items-center gap-2 p-2 rounded-md transition-all duration-200 hover:bg-secondary/50">
-      <span className="text-primary/70 text-sm">•</span>
-      <span className="text-sm">{name}</span>
+      <div className={cn("h-2 rounded-full", baseColor)}>
+        <div 
+          className={cn("h-full rounded-full transition-all duration-1000", fillColor)}
+          style={{ width: `${level}%` }}
+        />
+      </div>
     </div>
   );
 };
