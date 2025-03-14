@@ -103,13 +103,6 @@ export default {
 					'50%': {
 						transform: 'translateY(-5px)'
 					}
-				},
-				'programmer-wave': {
-					'0%': { transform: 'rotate(0deg)' },
-					'25%': { transform: 'rotate(10deg)' },
-					'50%': { transform: 'rotate(0deg)' },
-					'75%': { transform: 'rotate(-10deg)' },
-					'100%': { transform: 'rotate(0deg)' }
 				}
 			},
 			animation: {
@@ -118,8 +111,7 @@ export default {
 				'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
 				'fade-in': 'fade-in 0.5s ease-out forwards',
 				'scale-in': 'scale-in 0.5s ease-out forwards',
-				'float': 'float 3s ease-in-out infinite',
-				'programmer-wave': 'programmer-wave 3s ease-in-out infinite'
+				'float': 'float 3s ease-in-out infinite'
 			}
 		}
 	},

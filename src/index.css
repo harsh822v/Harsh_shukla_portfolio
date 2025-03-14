@@ -86,7 +86,7 @@
   }
 
   .glass {
-    @apply dark:bg-black/30 bg-white/80 bg-opacity-20 backdrop-blur-lg border border-white/10 dark:border-white/5 shadow-md;
+    @apply bg-white/80 bg-opacity-20 backdrop-blur-lg border border-white/10 shadow-md;
   }
 }
 
@@ -114,37 +114,4 @@ html {
 * {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
-}
-
-/* Dark mode transitions */
-.dark-transition {
-  @apply transition-colors duration-300;
-}
-
-/* Technology icon styles */
-.tech-icon {
-  @apply flex flex-col items-center justify-center p-3 rounded-lg bg-opacity-10 backdrop-filter backdrop-blur-sm 
-  transition-all duration-300 hover:scale-110 hover:shadow-lg dark:hover:shadow-primary/20 hover:shadow-primary/10;
-}
-
-.tech-icon img, 
-.tech-icon svg {
-  @apply w-12 h-12 mb-2;
-}
-
-.tech-icon-name {
-  @apply text-sm font-medium mt-2 text-center;
-}
-
-/* Skill level indicator */
-.skill-level {
-  @apply flex mt-1;
-}
-
-.skill-dot {
-  @apply w-1.5 h-1.5 rounded-full mx-0.5 opacity-50;
-}
-
-.skill-dot.active {
-  @apply opacity-100;
 }
