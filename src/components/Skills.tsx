@@ -1,55 +1,99 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import AnimatedSection from './AnimatedSection';
-import { cn } from '@/lib/utils';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Code, GraduationCap, Award, Layers } from 'lucide-react';
 
 interface SkillProps {
   name: string;
-  level: number;
-  category: string;
+  icon: React.ReactNode;
+  color: string;
 }
 
 const Skills: React.FC = () => {
-  const skillCategories = [
+  const [activeTab, setActiveTab] = useState("tech-stack");
+
+  const techSkills: SkillProps[] = [
     {
-      name: "Frontend",
-      skills: [
-        { name: "HTML/CSS", level: 90 },
-        { name: "JavaScript", level: 85 },
-        { name: "React", level: 85 },
-        { name: "TypeScript", level: 80 },
-        { name: "Next.js", level: 75 },
-      ]
+      name: "HTML",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-12 h-12">
+          <path fill="#E44D26" d="M0 32l34.9 395.8L191.5 480l157.6-52.2L384 32H0zm308.2 127.9H124.4l4.1 49.4h175.6l-13.6 148.4-97.9 27v.3h-1.1l-98.7-27.3-6-75.8h47.7L138 320l53.5 14.5 53.7-14.5 6-62.2H84.3L71.5 112.2h241.1l-4.4 47.7z"/>
+        </svg>
+      ),
+      color: "bg-orange-500/10 border-orange-500/20",
     },
     {
-      name: "Backend",
-      skills: [
-        { name: "Node.js", level: 80 },
-        { name: "Express", level: 80 },
-        { name: "Python", level: 70 },
-        { name: "GraphQL", level: 65 },
-        { name: "MongoDB", level: 80 },
-      ]
+      name: "CSS",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-12 h-12">
+          <path fill="#1572B6" d="M0 32l34.9 395.8L192 480l157.1-52.2L384 32H0zm313.1 80l-4.8 47.3L193 208.6l-.3.1h111.5l-12.8 146.6-98.2 28.7-98.8-29.2-6.4-73.9h48.9l3.2 38.3 52.6 13.3 54.7-15.4 3.7-61.6-166.3-.5v-.1l-.2.1-3.6-46.3L193.1 162l6.5-2.7H76.7L70.9 112h242.2z"/>
+        </svg>
+      ),
+      color: "bg-blue-500/10 border-blue-500/20",
     },
     {
-      name: "Design",
-      skills: [
-        { name: "UI/UX Design", level: 85 },
-        { name: "Figma", level: 90 },
-        { name: "Adobe XD", level: 80 },
-        { name: "Responsive Design", level: 90 },
-        { name: "Design Systems", level: 85 },
-      ]
+      name: "JavaScript",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-12 h-12">
+          <path fill="#F7DF1E" d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM243.8 381.4c0 43.6-25.6 63.5-62.9 63.5-33.7 0-53.2-17.4-63.2-38.5l34.3-20.7c6.6 11.7 12.6 21.6 27.1 21.6 13.8 0 22.6-5.4 22.6-26.5V237.7h42.1v143.7zm99.6 63.5c-39.1 0-64.4-18.6-76.7-43l34.3-19.8c9 14.7 20.8 25.6 41.5 25.6 17.4 0 28.6-8.7 28.6-20.8 0-14.4-11.4-19.5-30.7-28l-10.5-4.5c-30.4-12.9-50.5-29.2-50.5-63.5 0-31.6 24.1-55.6 61.6-55.6 26.8 0 46 9.3 59.8 33.7L368 290c-7.2-12.9-15-18-27.1-18-12.3 0-20.1 7.8-20.1 18 0 12.6 7.8 17.7 25.9 25.6l10.5 4.5c35.8 15.3 55.9 31 55.9 66.2 0 37.8-29.8 58.6-69.7 58.6z"/>
+        </svg>
+      ),
+      color: "bg-yellow-500/10 border-yellow-500/20",
     },
     {
-      name: "Tools & Others",
-      skills: [
-        { name: "Git", level: 85 },
-        { name: "Docker", level: 70 },
-        { name: "CI/CD", level: 75 },
-        { name: "AWS", level: 65 },
-        { name: "Agile Methodologies", level: 85 },
-      ]
+      name: "Java",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-12 h-12">
+          <path fill="#f89820" d="M277.74 312.9c9.8-6.7 23.4-12.5 23.4-12.5s-38.7 7-77.2 10.2c-47.1 3.9-97.7 4.7-123.1 1.3-60.1-8 33-30.1 33-30.1s-36.1-2.4-80.6 19c-52.5 25.4 130 37 224.5 12.1zm-85.4-32.1c-19-42.7-83.1-80.2 0-145.8C296 45.2 242.84 0 242.84 0c21.5 84.5-75.6 110.1-110.7 162.6-23.9 35.9 11.7 74.4 60.2 118.2zm114.6-176.2c.1 0-175.2 43.8-91.5 140.2 24.7 28.4-6.5 54-6.5 54s62.7-32.4 33.9-72.9c-26.9-37.8-47.5-56.6 64.1-121.3zm-6.1 270.5a12.19 12.19 0 0 1-2 2.6c128.3-33.7 81.1-118.9 19.8-97.3a17.33 17.33 0 0 0-8.2 6.3 70.45 70.45 0 0 1 11-3c31-6.5 75.5 41.5-20.6 91.4zM348 437.4s14.5 11.9-15.9 21.2c-57.9 17.5-240.8 22.8-291.6.7-18.3-7.9 16-19 26.8-21.3 11.2-2.4 17.7-2 17.7-2-20.3-14.3-131.3 28.1-56.4 40.2C232.84 509.4 401 461.3 348 437.4zM124.44 396c-78.7 22 47.9 67.4 148.1 24.5a185.89 185.89 0 0 1-28.2-13.8c-44.7 8.5-65.4 9.1-106 4.5-33.5-3.8-13.9-15.2-13.9-15.2zm179.8 97.2c-78.7 14.8-175.8 13.1-233.3 3.6 0-.1 11.8 9.7 72.4 13.6 92.2 5.9 233.8-3.3 237.1-46.9 0 0-6.4 16.5-76.2 29.7zM260.64 353c-59.2 11.4-93.5 11.1-136.8 6.6-33.5-3.5-11.6-19.7-11.6-19.7-86.8 28.8 48.2 61.4 169.5 25.9a60.37 60.37 0 0 1-21.1-12.8z"/>
+        </svg>
+      ),
+      color: "bg-amber-600/10 border-amber-600/20",
+    },
+    {
+      name: "Python",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-12 h-12">
+          <path fill="#4584b6" d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/>
+        </svg>
+      ),
+      color: "bg-blue-500/10 border-blue-500/20",
+    },
+    {
+      name: "Tailwind CSS",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-12 h-12">
+          <path fill="#44a8b3" d="M9 13.7q1.4-5.6 7-5.6c5.6 0 6.3 4.2 9.1 4.9q2.8.7 4.9-2.1-1.4 5.6-7 5.6c-5.6 0-6.3-4.2-9.1-4.9q-2.8-.7-4.9 2.1zm-7 8.4q1.4-5.6 7-5.6c5.6 0 6.3 4.2 9.1 4.9q2.8.7 4.9-2.1-1.4 5.6-7 5.6c-5.6 0-6.3-4.2-9.1-4.9q-2.8-.7-4.9 2.1z"/>
+        </svg>
+      ),
+      color: "bg-teal-500/10 border-teal-500/20",
+    },
+    {
+      name: "Android Studio",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-12 h-12">
+          <path fill="#3DDC84" d="M6.3 22.6h-.1c-.3-.4-.4-1-.4-1.6v-4.7h-2v4.7c0 .9.2 1.8.7 2.5.5.7 1.2 1.1 2.1 1.1h.2v-2h-.5zm3.5-15.1l1.8-3.2c.1-.2 0-.4-.1-.5-.2-.1-.4 0-.5.1l-1.8 3.2c-1.1-.4-2.3-.6-3.5-.6s-2.4.2-3.5.6l-1.8-3.2c-.1-.1-.3-.2-.5-.1-.1.1-.2.3-.1.5l1.8 3.2C-.9 9-.3 11.3-.3 13.9h16.3c0-2.6.6-4.9 1.9-6.4zm-7.2 3.2c-.4 0-.7-.3-.7-.7 0-.4.3-.7.7-.7s.7.3.7.7c.1.4-.3.7-.7.7zm7.5 0c-.4 0-.7-.3-.7-.7 0-.4.3-.7.7-.7s.7.3.7.7c0 .4-.3.7-.7.7zM4.6 24.5v-9.3H2.1v9.3h2.5zm1.5-9.3v9.3h2.5v-9.3H6.1zm3.7 0v9.3h2.5v-9.3H9.8zm3.8 0v9.3h2.5v-9.3h-2.5zm-6.7 11.3c0 .9.7 1.6 1.6 1.6h1.7v5.4c0 .9.2 1.8.7 2.5.5.7 1.2 1.1 2.1 1.1s1.6-.4 2.1-1.1c.5-.7.7-1.5.7-2.5v-5.4h1.7c.9 0 1.6-.7 1.6-1.6V16H6.9v10.5zm8.3 7c0 .6-.1 1.1-.4 1.6s-.7.7-1.2.7-1-.2-1.2-.7c-.3-.4-.4-1-.4-1.6V28h3.3v4.5zm9.8-11.9c-.9 0-1.6.4-2.1 1.1-.5.7-.7 1.5-.7 2.5v8.5c0 .9.2 1.8.7 2.5.5.7 1.2 1.1 2.1 1.1s1.6-.4 2.1-1.1c.5-.7.7-1.5.7-2.5v-8.5c0-.9-.2-1.8-.7-2.5-.5-.7-1.2-1.1-2.1-1.1zm1.2 12.1c0 .6-.1 1.1-.4 1.6-.3.4-.7.7-1.2.7s-1-.2-1.2-.7c-.3-.4-.4-1-.4-1.6V21.2c0-.6.1-1.1.4-1.6.3-.4.7-.7 1.2-.7s1 .2 1.2.7c.3.4.4 1 .4 1.6v8.5zm7.9-12.1c-.9 0-1.6.4-2.1 1.1-.5.7-.7 1.5-.7 2.5v8.5c0 .9.2 1.8.7 2.5.5.7 1.2 1.1 2.1 1.1s1.6-.4 2.1-1.1c.5-.7.7-1.5.7-2.5v-8.5c0-.9-.2-1.8-.7-2.5-.5-.7-1.2-1.1-2.1-1.1zm1.2 12.1c0 .6-.1 1.1-.4 1.6-.3.4-.7.7-1.2.7s-1-.2-1.2-.7c-.3-.4-.4-1-.4-1.6V21.2c0-.6.1-1.1.4-1.6.3-.4.7-.7 1.2-.7s1 .2 1.2.7c.3.4.4 1 .4 1.6v8.5z"/>
+        </svg>
+      ),
+      color: "bg-green-500/10 border-green-500/20",
+    },
+    {
+      name: "GitHub",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" className="w-12 h-12">
+          <path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/>
+        </svg>
+      ),
+      color: "bg-gray-500/10 border-gray-500/20",
+    },
+    {
+      name: "XAMPP",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-12 h-12">
+          <path fill="#FB7A24" d="M16 0C7.164 0 0 7.164 0 16s7.164 16 16 16 16-7.164 16-16S24.836 0 16 0zm0 4c6.627 0 12 5.373 12 12s-5.373 12-12 12S4 22.627 4 16 9.373 4 16 4zm-2 4v4h4V8h-4zm0 6v8h4v-8h-4z"/>
+        </svg>
+      ),
+      color: "bg-orange-500/10 border-orange-500/20",
     }
   ];
 
@@ -57,60 +101,35 @@ const Skills: React.FC = () => {
     <AnimatedSection id="skills">
       <div className="container mx-auto px-4 md:px-6">
         <h2 className="section-title">Skills</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-          {skillCategories.map((category, index) => (
-            <div 
-              key={category.name}
-              className="glass rounded-xl p-6"
-            >
-              <h3 className="text-xl font-medium mb-4">{category.name}</h3>
-              <div className="space-y-4">
-                {category.skills.map((skill, skillIndex) => (
-                  <SkillBar 
-                    key={skill.name} 
-                    name={skill.name} 
-                    level={skill.level} 
-                    category={category.name} 
-                  />
-                ))}
-              </div>
+
+        <Tabs defaultValue="tech-stack" className="mt-8">
+          <TabsList className="w-full justify-center space-x-4 rounded-xl bg-transparent">
+            <TabsTrigger value="tech-stack" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Layers className="w-4 h-4 mr-2" />
+              Tech Stack
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="tech-stack" className="mt-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {techSkills.map((skill) => (
+                <div 
+                  key={skill.name}
+                  className={cn(
+                    "glass border rounded-xl p-6 flex flex-col items-center justify-center transition-colors duration-300",
+                    skill.color,
+                    "hover:bg-background/50"
+                  )}
+                >
+                  {skill.icon}
+                  <span className="mt-4 font-medium">{skill.name}</span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </AnimatedSection>
-  );
-};
-
-const SkillBar: React.FC<SkillProps> = ({ name, level, category }) => {
-  let baseColor = "bg-blue-200";
-  let fillColor = "bg-blue-500";
-  
-  if (category === "Backend") {
-    baseColor = "bg-purple-200";
-    fillColor = "bg-purple-500";
-  } else if (category === "Design") {
-    baseColor = "bg-pink-200";
-    fillColor = "bg-pink-500";
-  } else if (category === "Tools & Others") {
-    baseColor = "bg-green-200";
-    fillColor = "bg-green-500";
-  }
-  
-  return (
-    <div className="space-y-2">
-      <div className="flex justify-between items-center">
-        <span className="text-sm font-medium">{name}</span>
-        <span className="text-xs text-muted-foreground">{level}%</span>
-      </div>
-      <div className={cn("h-2 rounded-full", baseColor)}>
-        <div 
-          className={cn("h-full rounded-full transition-all duration-1000", fillColor)}
-          style={{ width: `${level}%` }}
-        />
-      </div>
-    </div>
   );
 };
 
