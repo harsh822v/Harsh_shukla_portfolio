@@ -8,17 +8,11 @@ import Projects from '@/components/Projects';
 import Education from '@/components/Education';
 import Resume from '@/components/Resume';
 import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
 
 const Index = () => {
   useEffect(() => {
     // Set page title
-    document.title = "Shukla Harsh Pravinbhai | Portfolio";
-    
-    // Initialize Lucide icons after component mounts
-    if (window.lucide) {
-      window.lucide.createIcons();
-    }
+    document.title = "John Doe | Portfolio";
   }, []);
 
   return (
@@ -31,7 +25,12 @@ const Index = () => {
       <Education />
       <Resume />
       <Contact />
-      <Footer />
+      
+      <footer className="py-8 bg-secondary/40 text-center text-sm text-muted-foreground">
+        <div className="container mx-auto px-4">
+          <p>© {new Date().getFullYear()} John Doe. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 };
