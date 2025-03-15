@@ -74,7 +74,6 @@ const Navbar: React.FC = () => {
             <Switch
               checked={theme === "dark"}
               onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
-              size="sm"
             />
           </div>
           
