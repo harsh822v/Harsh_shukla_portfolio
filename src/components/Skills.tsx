@@ -1,112 +1,116 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import AnimatedSection from './AnimatedSection';
 import { cn } from '@/lib/utils';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
-interface Skill {
+interface SkillProps {
   name: string;
-  icon: string;
   level: number;
-}
-
-interface SkillCategory {
-  name: string;
-  skills: Skill[];
+  category: string;
 }
 
 const Skills: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState("Frontend");
-  
-  const skillCategories: SkillCategory[] = [
+  const skillCategories = [
     {
       name: "Frontend",
       skills: [
-        { name: "HTML/CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", level: 90 },
-        { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", level: 85 },
-        { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", level: 85 },
-        { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", level: 80 },
-        { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", level: 75 },
+        { name: "HTML/CSS", level: 90 },
+        { name: "JavaScript", level: 85 },
+        { name: "React", level: 85 },
+        { name: "TypeScript", level: 80 },
+        { name: "Next.js", level: 75 },
       ]
     },
     {
       name: "Backend",
       skills: [
-        { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", level: 80 },
-        { name: "Express", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", level: 80 },
-        { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", level: 70 },
-        { name: "GraphQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg", level: 65 },
-        { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", level: 80 },
+        { name: "Node.js", level: 80 },
+        { name: "Express", level: 80 },
+        { name: "Python", level: 70 },
+        { name: "GraphQL", level: 65 },
+        { name: "MongoDB", level: 80 },
       ]
     },
     {
       name: "Design",
       skills: [
-        { name: "UI/UX Design", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", level: 85 },
-        { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", level: 90 },
-        { name: "Adobe XD", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xd/xd-plain.svg", level: 80 },
-        { name: "Responsive Design", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", level: 90 },
-        { name: "Design Systems", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sketch/sketch-original.svg", level: 85 },
+        { name: "UI/UX Design", level: 85 },
+        { name: "Figma", level: 90 },
+        { name: "Adobe XD", level: 80 },
+        { name: "Responsive Design", level: 90 },
+        { name: "Design Systems", level: 85 },
       ]
     },
     {
       name: "Tools & Others",
       skills: [
-        { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", level: 85 },
-        { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", level: 70 },
-        { name: "CI/CD", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg", level: 75 },
-        { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg", level: 65 },
-        { name: "Agile Methodologies", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/trello/trello-plain.svg", level: 85 },
+        { name: "Git", level: 85 },
+        { name: "Docker", level: 70 },
+        { name: "CI/CD", level: 75 },
+        { name: "AWS", level: 65 },
+        { name: "Agile Methodologies", level: 85 },
       ]
     }
   ];
 
-  const activeSkills = skillCategories.find(category => category.name === activeCategory)?.skills || [];
-
   return (
     <AnimatedSection id="skills">
       <div className="container mx-auto px-4 md:px-6">
-        <h2 className="section-title">Tech Stack</h2>
+        <h2 className="section-title">Skills</h2>
         
-        <div className="flex justify-center my-8">
-          <ToggleGroup type="single" value={activeCategory} onValueChange={(value) => value && setActiveCategory(value)}>
-            {skillCategories.map((category) => (
-              <ToggleGroupItem key={category.name} value={category.name} variant="outline" 
-                className={cn(
-                  "px-4 py-2 rounded-full text-sm", 
-                  activeCategory === category.name ? "bg-primary text-primary-foreground" : ""
-                )}>
-                {category.name}
-              </ToggleGroupItem>
-            ))}
-          </ToggleGroup>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-8">
-          {activeSkills.map((skill) => (
-            <div key={skill.name} className="glass p-5 rounded-xl flex flex-col items-center text-center transition-all hover:scale-105">
-              <div className="rounded-full h-16 w-16 flex items-center justify-center bg-background mb-4">
-                <img 
-                  src={skill.icon} 
-                  alt={skill.name} 
-                  className="h-10 w-10"
-                />
-              </div>
-              <h3 className="text-base font-medium">{skill.name}</h3>
-              <div className="w-full mt-2">
-                <div className="h-1.5 w-full bg-secondary/50 rounded-full">
-                  <div 
-                    className="h-full rounded-full bg-primary"
-                    style={{ width: `${skill.level}%` }}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+          {skillCategories.map((category, index) => (
+            <div 
+              key={category.name}
+              className="glass rounded-xl p-6"
+            >
+              <h3 className="text-xl font-medium mb-4">{category.name}</h3>
+              <div className="space-y-4">
+                {category.skills.map((skill, skillIndex) => (
+                  <SkillBar 
+                    key={skill.name} 
+                    name={skill.name} 
+                    level={skill.level} 
+                    category={category.name} 
                   />
-                </div>
-                <div className="text-xs text-muted-foreground mt-1 text-right">{skill.level}%</div>
+                ))}
               </div>
             </div>
           ))}
         </div>
       </div>
     </AnimatedSection>
+  );
+};
+
+const SkillBar: React.FC<SkillProps> = ({ name, level, category }) => {
+  let baseColor = "bg-blue-200";
+  let fillColor = "bg-blue-500";
+  
+  if (category === "Backend") {
+    baseColor = "bg-purple-200";
+    fillColor = "bg-purple-500";
+  } else if (category === "Design") {
+    baseColor = "bg-pink-200";
+    fillColor = "bg-pink-500";
+  } else if (category === "Tools & Others") {
+    baseColor = "bg-green-200";
+    fillColor = "bg-green-500";
+  }
+  
+  return (
+    <div className="space-y-2">
+      <div className="flex justify-between items-center">
+        <span className="text-sm font-medium">{name}</span>
+        <span className="text-xs text-muted-foreground">{level}%</span>
+      </div>
+      <div className={cn("h-2 rounded-full", baseColor)}>
+        <div 
+          className={cn("h-full rounded-full transition-all duration-1000", fillColor)}
+          style={{ width: `${level}%` }}
+        />
+      </div>
+    </div>
   );
 };
 
