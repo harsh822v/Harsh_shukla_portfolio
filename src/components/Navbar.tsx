@@ -1,11 +1,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from './ThemeProvider';
+import { Switch } from '@/components/ui/switch';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -44,7 +47,7 @@ const Navbar: React.FC = () => {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden md:flex items-center space-x-8">
           {menuItems.map((item) => (
             <a
               key={item.name}
@@ -54,20 +57,39 @@ const Navbar: React.FC = () => {
               {item.name}
             </a>
           ))}
+          
+          <div className="flex items-center gap-2 ml-4">
+            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <Switch
+              checked={theme === "dark"}
+              onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
+            />
+          </div>
         </nav>
 
         {/* Mobile menu button */}
-        <button
-          className="md:hidden flex items-center"
-          onClick={toggleMobileMenu}
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? (
-            <X className="h-6 w-6 text-primary" />
-          ) : (
-            <Menu className="h-6 w-6 text-primary" />
-          )}
-        </button>
+        <div className="md:hidden flex items-center gap-4">
+          <div className="flex items-center">
+            <Switch
+              checked={theme === "dark"}
+              onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
+              size="sm"
+            />
+          </div>
+          
+          <button
+            className="flex items-center"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="h-6 w-6 text-primary" />
+            ) : (
+              <Menu className="h-6 w-6 text-primary" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}

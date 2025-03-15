@@ -8,6 +8,7 @@ import Projects from '@/components/Projects';
 import Education from '@/components/Education';
 import Resume from '@/components/Resume';
 import Contact from '@/components/Contact';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 const Index = () => {
   useEffect(() => {
@@ -16,22 +17,24 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Education />
-      <Resume />
-      <Contact />
-      
-      <footer className="py-8 bg-secondary/40 text-center text-sm text-muted-foreground">
-        <div className="container mx-auto px-4">
-          <p>© {new Date().getFullYear()} John Doe. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
+    <ThemeProvider>
+      <div className="min-h-screen">
+        <Navbar />
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Education />
+        <Resume />
+        <Contact />
+        
+        <footer className="py-8 bg-secondary/40 text-center text-sm text-muted-foreground">
+          <div className="container mx-auto px-4">
+            <p>© {new Date().getFullYear()} John Doe. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
+    </ThemeProvider>
   );
 };
 

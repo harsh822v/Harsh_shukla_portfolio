@@ -1,7 +1,7 @@
 
 import React from 'react';
 import AnimatedSection from './AnimatedSection';
-import { Github, Linkedin, Mail, Twitter, Link as LinkIcon } from 'lucide-react';
+import { Github, Linkedin, Mail, Twitter, ExternalLink } from 'lucide-react';
 
 interface SocialLinkProps {
   platform: string;
@@ -14,27 +14,27 @@ const Contact: React.FC = () => {
     {
       platform: "GitHub",
       url: "https://github.com/johndoe",
-      icon: <Github />
+      icon: <Github className="h-5 w-5" />
     },
     {
       platform: "LinkedIn",
       url: "https://linkedin.com/in/johndoe",
-      icon: <Linkedin />
+      icon: <Linkedin className="h-5 w-5" />
     },
     {
       platform: "Twitter",
       url: "https://twitter.com/johndoe",
-      icon: <Twitter />
+      icon: <Twitter className="h-5 w-5" />
     },
     {
       platform: "Email",
       url: "mailto:hello@johndoe.com",
-      icon: <Mail />
+      icon: <Mail className="h-5 w-5" />
     },
     {
       platform: "Website",
       url: "https://johndoe.com",
-      icon: <LinkIcon />
+      icon: <ExternalLink className="h-5 w-5" />
     }
   ];
 
